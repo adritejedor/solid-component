@@ -7,17 +7,6 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
 
-  public counterProgress: number = 0;
-  public totalCountdown:number = 15;
   constructor() { }
-
-  updateProgress($event){
-    this.counterProgress = (this.totalCountdown - $event) / this.totalCountdown * 100;
-  }
-
-  countdownFinished(){
-    console.log('countdown has finished');
-    
-  }
 
 }
