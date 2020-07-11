@@ -9,7 +9,7 @@ export class AppComponent {
 
   constructor() { }
 
-  logtimerComplete(){
+  logTimerComplete(){
     console.log('el timer ha terminado');
   }
 
