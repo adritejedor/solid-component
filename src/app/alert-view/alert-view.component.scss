@@ -24,11 +24,7 @@
     align-items: center;
 }
 
-.header {
-    margin-bottom: 30px;
-    font-size: 20px;
-    font-weight: 600;
-}
+
 
 .message {
     display: flex;
@@ -48,12 +44,4 @@
     display: flex;
     justify-content: flex-end;
     width: 100%;
-
-    .cancel-button {
-        margin-right: 10px;
-        background-color: #777;
-        &:active {
-            background-color: #444;
-        }
-    }
 }

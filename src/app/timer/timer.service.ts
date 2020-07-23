@@ -22,7 +22,7 @@ export class TimerService {
   }
 
   restartCountdown(init?) {
-    if (init) 
+    if (init)
       this.init = init;
 
     if (this.init && this.init > 0) {
@@ -43,17 +43,21 @@ export class TimerService {
   }
 
   private doCountdown() {
-    this.countdownTimerRef = setTimeout(() => {
-      //this.countdown = this.countdown - 1;
-      this.countdownSource.next(this.countdownSource.getValue()-1)
-      this.processCountdown();
-    }, 1000);
+    if (this.countdownSource.getValue() != 0) {
+      this.countdownTimerRef = setTimeout(() => {
+        //this.countdown = this.countdown - 1;
+        this.countdownSource.next(this.countdownSource.getValue() - 1)
+        this.processCountdown();
+      }, 1000);
+    } else {
+      console.log('countdown has finished, so restart timer');
+    }
   }
 
   private processCountdown() {
     if (this.countdownSource.getValue() == 0) {
-    // this.onComplete.emit();
-    this.countdownEndSource.next();
+      // this.onComplete.emit();
+      this.countdownEndSource.next();
     }
     else {
       this.doCountdown();
