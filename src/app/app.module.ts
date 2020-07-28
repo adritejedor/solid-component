@@ -28,6 +28,9 @@ import { TimerComponent } from './timer/timer.component';
     AppRoutingModule,
     FormsModule
   ],
+  entryComponents: [
+    SimpleAlertViewComponent
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

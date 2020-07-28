@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChildren, QueryList, ChangeDetectorRef, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, AfterViewInit, ViewChild, ElementRef, Renderer2, ViewContainerRef, ComponentFactoryResolver, AfterContentInit, ComponentRef } from '@angular/core';
 import { SimpleAlertViewComponent } from './simple-alert-view/simple-alert-view.component';
 
 @Component({
@@ -6,34 +6,28 @@ import { SimpleAlertViewComponent } from './simple-alert-view/simple-alert-view.
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements AfterViewInit {
+export class AppComponent implements AfterViewInit, AfterContentInit {
   
   public isAddTimerVisible: boolean = false;
   public time:number = 0;
   public timers:Array<number> = [];
-  @ViewChildren(SimpleAlertViewComponent) alerts: QueryList<SimpleAlertViewComponent>;
   @ViewChild("timerInput") timeInput: ElementRef;
+  @ViewChild("alert", {static: true, read: ViewContainerRef}) alertContainer: ViewContainerRef;
+  public simpleAlert: ComponentRef<SimpleAlertViewComponent> = null;
   
   constructor(
-    private cdRef: ChangeDetectorRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private resolver: ComponentFactoryResolver
   ) { 
     this.timers = [5, 23, 172];
   }
 
   ngAfterViewInit(){
-    console.log(this.timeInput);
-    // this.timeInput.nativeElement.setAttribute("placeholder", "enter seconds");
-    // this.timeInput.nativeElement.classList.add("time-in");
-    this.renderer.setAttribute(this.timeInput.nativeElement, "placeholder", "enter secons");
-    this.renderer.addClass(this.timeInput.nativeElement, "time-in");
-    this.alerts.forEach(item => {
-      if (!item.title) {
-        item.title = 'Hi';
-        item.message = 'Hello World!!'
-      }
-    });
-    this.cdRef.detectChanges();
+  }
+
+  ngAfterContentInit() {
+    const alertFactory = this.resolver.resolveComponentFactory(SimpleAlertViewComponent);
+    this.simpleAlert = this.alertContainer.createComponent(alertFactory);
   }
 
   logTimerComplete(){
@@ -43,7 +37,6 @@ export class AppComponent implements AfterViewInit {
   showAddTimer(){
     this.isAddTimerVisible = true;
     setTimeout(() => {
-      // this.timeInput.nativeElement.focus();
       this.renderer.selectRootElement(this.timeInput.nativeElement).focus();
     }, 100);
   }
@@ -53,7 +46,14 @@ export class AppComponent implements AfterViewInit {
   }
 
   showEndTimerAlert(){
-    this.alerts.first.show();
+    this.renderer.setAttribute(this.timeInput.nativeElement, "placeholder", "enter secons");
+    this.renderer.addClass(this.timeInput.nativeElement, "time-in");
+    this.simpleAlert.instance.title = "Timer End";
+    this.simpleAlert.instance.message = "Your countdown has finished";
+    this.simpleAlert.instance.onDismiss.subscribe(()=>{
+      this.simpleAlert.destroy();
+    })
+    this.simpleAlert.instance.show();
   }
 
 
