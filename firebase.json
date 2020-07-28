@@ -1,0 +1,10 @@
+{
+  "hosting": {
+    "public": "dist/solid-timer",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+}
