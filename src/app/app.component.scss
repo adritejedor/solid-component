@@ -1,0 +1,54 @@
+:host {
+    & > div {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+
+        h1 {
+            font-family: sans-serif;
+            width: 100%;
+            text-align: center;
+        }
+
+        app-timer {
+            flex-grow: 1;
+        }
+    }
+
+    .add {
+        position: fixed;
+        color: white;
+        bottom: 20px;
+        right: 20px;
+        width: 80px;
+        height: 80px;
+        border-radius: 40px;
+        border: none;
+        font-size: 30px;
+        background-color: #ddd;
+
+        &:active {
+            background-color: #aaa;
+        }
+    }
+
+    .cancel-button {
+        margin-right: 10px;
+        background-color: #777;
+        &:active {
+            background-color: #444;
+        }
+    }
+
+    .time-in {
+        font-weight: 600;
+        color: #9932cc;
+        font-size: 12px;
+    }
+
+    .header {
+        margin-bottom: 30px;
+        font-size: 20px;
+        font-weight: 600;
+    }
+}
